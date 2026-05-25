@@ -4,167 +4,268 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Dhruvil Patel</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     body {
-      font-family: 'DM Sans', sans-serif;
-      background: #a8c4a3;
-      color: #1a2e18;
+      font-family: 'Space Grotesk', sans-serif;
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 80px 24px 60px;
+      background: linear-gradient(160deg, #e2f0de 0%, #eef6eb 50%, #d9ecdd 100%);
+      color: #1c3020;
+      overflow-x: hidden;
     }
 
-    header {
-      text-align: center;
-      margin-bottom: 72px;
+    /* floating blobs only — no grid */
+    .blob {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.22;
+      pointer-events: none;
+      z-index: 0;
+      animation: drift 14s ease-in-out infinite alternate;
     }
+    .blob-1 { width: 500px; height: 500px; background: #a8d8a0; top: -150px; left: -120px; animation-duration: 16s; }
+    .blob-2 { width: 360px; height: 360px; background: #6eb88a; bottom: 60px; right: -80px; animation-duration: 11s; }
+    .blob-3 { width: 260px; height: 260px; background: #c2e0bb; top: 45%; left: 55%; animation-duration: 18s; }
+    @keyframes drift { from { transform: translate(0,0) scale(1); } to { transform: translate(28px,18px) scale(1.07); } }
 
-    h1 {
-      font-family: 'Playfair Display', serif;
-      font-size: clamp(3rem, 8vw, 6.5rem);
-      font-weight: 700;
-      letter-spacing: -1px;
-      color: #1a2e18;
-      line-height: 1.05;
-    }
-
-    h1 span {
-      display: block;
-      width: 60px;
-      height: 3px;
-      background: #c9a84c;
-      margin: 20px auto 0;
-      border-radius: 2px;
-    }
-
-    .card-grid {
-      display: grid;
-      grid-template-columns: 1fr;
-      gap: 0;
-      width: 100%;
-      max-width: 480px;
-    }
-
-    .card {
-      display: block;
-      text-decoration: none;
-      background: #b5ceb1;
-      border: 0.5px solid #8fb08a;
-      padding: 36px 40px;
-      cursor: pointer;
+    /* ── page wrapper ── */
+    .page {
       position: relative;
-      overflow: hidden;
-      transition: background 0.25s ease, border-color 0.25s ease;
+      z-index: 1;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 52px 28px 80px;
     }
 
-    .card:first-child { border-radius: 12px 12px 0 0; }
-    .card:last-child  { border-radius: 0 0 12px 12px; border-top: none; }
-
-    .card::after {
-      content: '';
-      position: absolute;
-      left: 0; top: 0;
-      width: 3px; height: 100%;
-      background: #c9a84c;
-      transform: scaleY(0);
-      transform-origin: bottom;
-      transition: transform 0.25s ease;
+    /* ── nav ── */
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 64px;
     }
 
-    .card:hover { background: #bdd3b9; border-color: #7aa375; }
-    .card:hover::after { transform: scaleY(1); }
+    .nav-logo {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #2e5c30;
+      background: rgba(255,255,255,0.38);
+      border: 1px solid rgba(255,255,255,0.6);
+      backdrop-filter: blur(12px);
+      padding: 7px 16px;
+      border-radius: 20px;
+    }
 
-    .card-label {
+    .nav-tags { display: flex; gap: 8px; }
+    .nav-tag {
       font-size: 11px;
       font-weight: 500;
-      letter-spacing: 2.5px;
+      letter-spacing: 1.5px;
       text-transform: uppercase;
-      color: #c9a84c;
-      margin-bottom: 8px;
+      color: #3a6640;
+      background: rgba(255,255,255,0.3);
+      border: 1px solid rgba(255,255,255,0.5);
+      backdrop-filter: blur(8px);
+      padding: 6px 14px;
+      border-radius: 20px;
     }
 
-    .card-title {
-      font-family: 'Playfair Display', serif;
-      font-size: 1.5rem;
-      color: #1a2e18;
-      font-weight: 700;
+    /* ── BIG centred name ── */
+    .hero-name {
+      text-align: center;
+      margin-bottom: 80px;
     }
+
+    .hero-name h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(4rem, 13vw, 9rem);
+      font-weight: 700;
+      line-height: 1;
+      color: #000;
+      letter-spacing: -2px;
+    }
+
+    .hero-name .sub {
+      margin-top: 14px;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #5a8a60;
+    }
+
+    /* ── section label ── */
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #5a8a60;
+      margin-bottom: 18px;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(90,140,90,0.2);
+    }
+
+    /* ── stats ── */
+    .stats {
+      display: flex;
+      gap: 16px;
+      margin-bottom: 56px;
+      flex-wrap: wrap;
+    }
+    .stat {
+      background: rgba(255,255,255,0.3);
+      border: 1px solid rgba(255,255,255,0.55);
+      backdrop-filter: blur(16px);
+      border-radius: 14px;
+      padding: 18px 24px;
+      flex: 1;
+      min-width: 110px;
+    }
+    .stat-number { font-size: 2rem; font-weight: 700; color: #000; line-height: 1; margin-bottom: 4px; }
+    .stat-label { font-size: 10px; font-weight: 600; letter-spacing: 1.5px; text-transform: uppercase; color: #5a8a60; }
+
+    /* ── skills ── */
+    .skills { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 56px; }
+    .chip {
+      font-size: 12px;
+      font-weight: 500;
+      color: #1c3020;
+      background: rgba(255,255,255,0.35);
+      border: 1px solid rgba(255,255,255,0.6);
+      backdrop-filter: blur(10px);
+      padding: 7px 16px;
+      border-radius: 20px;
+      transition: background 0.2s;
+    }
+    .chip:hover { background: rgba(255,255,255,0.55); }
+
+    /* ── card ── */
+    .card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      text-decoration: none;
+      background: rgba(255,255,255,0.3);
+      border: 1px solid rgba(255,255,255,0.55);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 18px;
+      padding: 30px 34px;
+      margin-bottom: 56px;
+      transition: background 0.25s, transform 0.2s;
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.85), transparent);
+    }
+    .card:hover { background: rgba(255,255,255,0.45); transform: translateY(-3px); }
+
+    .card-left { display: flex; flex-direction: column; gap: 5px; }
+    .card-num { font-size: 10px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: #6aaa70; }
+    .card-title { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; color: #000; }
+    .card-sub { font-size: 13px; color: #5a8a60; }
 
     .card-arrow {
-      position: absolute;
-      right: 40px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 20px;
-      color: #7a9975;
-      transition: color 0.25s, right 0.2s;
+      width: 46px; height: 46px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.45);
+      border: 1px solid rgba(255,255,255,0.65);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; color: #1c3020; flex-shrink: 0;
+      transition: background 0.2s, transform 0.2s, color 0.2s;
     }
-    .card:hover .card-arrow { color: #c9a84c; right: 32px; }
+    .card:hover .card-arrow { background: #1c3020; color: #fff; transform: rotate(45deg); }
 
+    /* ── linkedin ── */
     .linkedin-btn {
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      margin-top: 52px;
       text-decoration: none;
-      background: transparent;
-      border: 1px solid #8fb08a;
-      color: #1a2e18;
-      font-family: 'DM Sans', sans-serif;
+      background: rgba(255,255,255,0.3);
+      border: 1px solid rgba(255,255,255,0.55);
+      backdrop-filter: blur(14px);
+      color: #1c3020;
+      font-family: 'Space Grotesk', sans-serif;
       font-size: 14px;
       font-weight: 500;
-      letter-spacing: 0.5px;
-      padding: 14px 28px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background 0.2s, border-color 0.2s, color 0.2s;
+      padding: 13px 26px;
+      border-radius: 50px;
+      transition: background 0.2s, transform 0.2s;
     }
+    .linkedin-btn svg { width: 18px; height: 18px; fill: #0a66c2; flex-shrink: 0; }
+    .linkedin-btn:hover { background: rgba(255,255,255,0.5); transform: translateY(-2px); }
 
-    .linkedin-btn svg {
-      width: 18px; height: 18px;
-      fill: #0a66c2;
-      flex-shrink: 0;
-      transition: transform 0.2s;
+    @media (max-width: 540px) {
+      nav { flex-direction: column; gap: 12px; align-items: flex-start; }
+      .stats { gap: 10px; }
+      .card { flex-direction: column; align-items: flex-start; gap: 18px; }
     }
-
-    .linkedin-btn:hover {
-      background: #bdd3b9;
-      border-color: #0a66c2;
-      color: #1a2e18;
-    }
-    .linkedin-btn:hover svg { transform: scale(1.1); }
   </style>
 </head>
 <body>
 
-  <header>
-    <h1>Dhruvil Patel<span></span></h1>
-  </header>
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
 
-  <div class="card-grid">
+  <div class="page">
+
+    <!-- Big centred name -->
+    <div class="hero-name">
+      <h1>Dhruvil Patel</h1>
+      <div class="sub">Engineering Student</div>
+    </div>
+
+    <div class="section-label">Skills &amp; Tools</div>
+    <div class="skills">
+      <span class="chip">Python</span>
+      <span class="chip">CAD / SolidWorks</span>
+      <span class="chip">MATLAB</span>
+      <span class="chip">Circuit Design</span>
+      <span class="chip">3D Printing</span>
+      <span class="chip">Data Analysis</span>
+      <span class="chip">GitHub</span>
+      <span class="chip">Linux</span>
+    </div>
+
+    <div class="section-label">Featured</div>
     <a class="card" href="page.html">
-      <div class="card-label">01</div>
-      <div class="card-title">Explore</div>
-      <span class="card-arrow">→</span>
+      <div class="card-left">
+        <div class="card-num">01 — Explore</div>
+        <div class="card-title">My Work</div>
+        <div class="card-sub">Projects, portfolio &amp; more</div>
+      </div>
+      <div class="card-arrow">↗</div>
     </a>
-  </div>
 
-  <a
-    class="linkedin-btn"
-    href="https://www.linkedin.com/in/dhruvilptl07"
-    target="_blank"
-    rel="noopener noreferrer"
-  >
-    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-      <path d="M20.447 20.452H17.21v-5.569c0-1.327-.024-3.037-1.852-3.037-1.854 0-2.137 1.446-2.137 2.941v5.665H9.985V9h3.107v1.561h.044c.433-.82 1.49-1.684 3.066-1.684 3.278 0 3.883 2.157 3.883 4.963l-.001 6.612zM5.337 7.433a1.806 1.806 0 1 1 0-3.612 1.806 1.806 0 0 1 0 3.612zm1.554 13.019H3.782V9h3.109v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.226.792 24 1.771 24h20.451C23.205 24 24 23.226 24 22.271V1.729C24 .774 23.205 0 22.225 0z"/>
-    </svg>
-    Connect on LinkedIn
-  </a>
+    <div class="section-label">Connect</div>
+    <a class="linkedin-btn" href="https://www.linkedin.com/in/dhruvilptl07" target="_blank" rel="noopener noreferrer">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path d="M20.447 20.452H17.21v-5.569c0-1.327-.024-3.037-1.852-3.037-1.854 0-2.137 1.446-2.137 2.941v5.665H9.985V9h3.107v1.561h.044c.433-.82 1.49-1.684 3.066-1.684 3.278 0 3.883 2.157 3.883 4.963l-.001 6.612zM5.337 7.433a1.806 1.806 0 1 1 0-3.612 1.806 1.806 0 0 1 0 3.612zm1.554 13.019H3.782V9h3.109v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.226.792 24 1.771 24h20.451C23.205 24 24 23.226 24 22.271V1.729C24 .774 23.205 0 22.225 0z"/>
+      </svg>
+      Connect on LinkedIn
+    </a>
+
+  </div>
 
 </body>
 </html>
