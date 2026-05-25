@@ -6,204 +6,256 @@ Usage: python generate_site.py
 
 import os
 
-OUTPUT_DIR = "."  # Files are written to the current directory
+OUTPUT_DIR = "."
 
-# ── Configuration — edit these ──────────────────────────────────────────────
 NAME = "Dhruvil Patel"
 LINKEDIN_URL = "https://www.linkedin.com/in/dhruvilptl07"
-# ────────────────────────────────────────────────────────────────────────────
+GITHUB_URL = "https://github.com/Dhruvil61875"
 
-INDEX_HTML = f"""<!DOCTYPE html>
+INDEX_HTML = """<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>{NAME}</title>
-  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <title>Dhruvil Patel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Playfair+Display:wght@700&display=swap" rel="stylesheet"/>
   <style>
-    *, *::before, *::after {{ box-sizing: border-box; margin: 0; padding: 0; }}
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
-    body {{
-      font-family: 'DM Sans', sans-serif;
-      background: #a8c4a3;
-      color: #1a2e18;
+    body {
+      font-family: 'Space Grotesk', sans-serif;
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      padding: 80px 24px 60px;
-    }}
+      background: linear-gradient(160deg, #e2f0de 0%, #eef6eb 50%, #d9ecdd 100%);
+      color: #1c3020;
+      overflow-x: hidden;
+    }
 
-    header {{ text-align: center; margin-bottom: 72px; }}
+    .blob {
+      position: fixed;
+      border-radius: 50%;
+      filter: blur(100px);
+      opacity: 0.22;
+      pointer-events: none;
+      z-index: 0;
+      animation: drift 14s ease-in-out infinite alternate;
+    }
+    .blob-1 { width: 500px; height: 500px; background: #a8d8a0; top: -150px; left: -120px; animation-duration: 16s; }
+    .blob-2 { width: 360px; height: 360px; background: #6eb88a; bottom: 60px; right: -80px; animation-duration: 11s; }
+    .blob-3 { width: 260px; height: 260px; background: #c2e0bb; top: 45%; left: 55%; animation-duration: 18s; }
+    @keyframes drift { from { transform: translate(0,0) scale(1); } to { transform: translate(28px,18px) scale(1.07); } }
 
-    h1 {{
+    .page {
+      position: relative;
+      z-index: 1;
+      max-width: 860px;
+      margin: 0 auto;
+      padding: 52px 28px 80px;
+    }
+
+    .hero-name {
+      text-align: center;
+      margin-bottom: 80px;
+    }
+
+    .hero-name h1 {
       font-family: 'Playfair Display', serif;
-      font-size: clamp(3rem, 8vw, 6.5rem);
+      font-size: clamp(2.5rem, 7.5vw, 6rem);
       font-weight: 700;
+      line-height: 1;
+      color: #000;
       letter-spacing: -1px;
-      color: #1a2e18;
-      line-height: 1.05;
-    }}
+      white-space: nowrap;
+    }
 
-    h1 span {{
-      display: block;
-      width: 60px;
-      height: 3px;
-      background: #c9a84c;
-      margin: 20px auto 0;
-      border-radius: 2px;
-    }}
+    .hero-name .sub {
+      margin-top: 14px;
+      font-size: 12px;
+      font-weight: 500;
+      letter-spacing: 4px;
+      text-transform: uppercase;
+      color: #5a8a60;
+    }
 
-    .card-grid {{
-      display: grid;
-      grid-template-columns: 1fr;
-      width: 100%;
-      max-width: 480px;
-    }}
+    .section-label {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 3px;
+      text-transform: uppercase;
+      color: #5a8a60;
+      margin-bottom: 18px;
+    }
+    .section-label::after {
+      content: '';
+      flex: 1;
+      height: 1px;
+      background: rgba(90,140,90,0.2);
+    }
 
-    .card {{
-      display: block;
+    .skills { display: flex; flex-wrap: wrap; gap: 10px; margin-bottom: 56px; }
+    .chip {
+      font-size: 12px;
+      font-weight: 500;
+      color: #1c3020;
+      background: rgba(255,255,255,0.35);
+      border: 1px solid rgba(255,255,255,0.6);
+      backdrop-filter: blur(10px);
+      padding: 7px 16px;
+      border-radius: 20px;
+      transition: background 0.2s;
+    }
+    .chip:hover { background: rgba(255,255,255,0.55); }
+
+    .card {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
       text-decoration: none;
-      background: #b5ceb1;
-      border: 0.5px solid #8fb08a;
-      padding: 36px 40px;
-      cursor: pointer;
+      background: rgba(255,255,255,0.3);
+      border: 1px solid rgba(255,255,255,0.55);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border-radius: 18px;
+      padding: 30px 34px;
+      margin-bottom: 56px;
+      transition: background 0.25s, transform 0.2s;
       position: relative;
       overflow: hidden;
-      border-radius: 12px;
-      transition: background 0.25s ease, border-color 0.25s ease;
-    }}
-
-    .card::after {{
+    }
+    .card::before {
       content: '';
       position: absolute;
-      left: 0; top: 0;
-      width: 3px; height: 100%;
-      background: #c9a84c;
-      transform: scaleY(0);
-      transform-origin: bottom;
-      transition: transform 0.25s ease;
-    }}
+      top: 0; left: 0; right: 0;
+      height: 1px;
+      background: linear-gradient(90deg, transparent, rgba(255,255,255,0.85), transparent);
+    }
+    .card:hover { background: rgba(255,255,255,0.45); transform: translateY(-3px); }
 
-    .card:hover {{ background: #bdd3b9; border-color: #7aa375; }}
-    .card:hover::after {{ transform: scaleY(1); }}
+    .card-left { display: flex; flex-direction: column; gap: 5px; }
+    .card-num { font-size: 10px; font-weight: 600; letter-spacing: 2.5px; text-transform: uppercase; color: #6aaa70; }
+    .card-title { font-family: 'Playfair Display', serif; font-size: 1.6rem; font-weight: 700; color: #000; }
+    .card-sub { font-size: 13px; color: #5a8a60; }
 
-    .card-label {{
-      font-size: 11px;
-      font-weight: 500;
-      letter-spacing: 2.5px;
-      text-transform: uppercase;
-      color: #c9a84c;
-      margin-bottom: 8px;
-    }}
+    .card-arrow {
+      width: 46px; height: 46px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.45);
+      border: 1px solid rgba(255,255,255,0.65);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 18px; color: #1c3020; flex-shrink: 0;
+      transition: background 0.2s, transform 0.2s, color 0.2s;
+    }
+    .card:hover .card-arrow { background: #1c3020; color: #fff; transform: rotate(45deg); }
 
-    .card-title {{
-      font-family: 'Playfair Display', serif;
-      font-size: 1.5rem;
-      color: #1a2e18;
-      font-weight: 700;
-    }}
-
-    .card-arrow {{
-      position: absolute;
-      right: 40px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 20px;
-      color: #7a9975;
-      transition: color 0.25s, right 0.2s;
-    }}
-    .card:hover .card-arrow {{ color: #c9a84c; right: 32px; }}
-
-    .linkedin-btn {{
+    .linkedin-btn {
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      margin-top: 52px;
       text-decoration: none;
-      background: transparent;
-      border: 1px solid #8fb08a;
-      color: #1a2e18;
-      font-family: 'DM Sans', sans-serif;
+      background: rgba(255,255,255,0.3);
+      border: 1px solid rgba(255,255,255,0.55);
+      backdrop-filter: blur(14px);
+      color: #1c3020;
+      font-family: 'Space Grotesk', sans-serif;
       font-size: 14px;
       font-weight: 500;
-      letter-spacing: 0.5px;
-      padding: 14px 28px;
-      border-radius: 8px;
-      cursor: pointer;
-      transition: background 0.2s, border-color 0.2s, color 0.2s;
-    }}
+      padding: 13px 26px;
+      border-radius: 50px;
+      transition: background 0.2s, transform 0.2s;
+    }
+    .linkedin-btn:hover { background: rgba(255,255,255,0.5); transform: translateY(-2px); }
 
-    .linkedin-btn svg {{
-      width: 18px; height: 18px;
-      fill: #0a66c2;
-      flex-shrink: 0;
-      transition: transform 0.2s;
-    }}
-
-    .linkedin-btn:hover {{
-      background: #bdd3b9;
-      border-color: #0a66c2;
-      color: #1a2e18;
-    }}
-    .linkedin-btn:hover svg {{ transform: scale(1.1); }}
+    @media (max-width: 540px) {
+      .card { flex-direction: column; align-items: flex-start; gap: 18px; }
+    }
   </style>
 </head>
 <body>
 
-  <header>
-    <h1>{NAME}<span></span></h1>
-  </header>
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
 
-  <div class="card-grid">
+  <div class="page">
+
+    <div class="hero-name">
+      <h1>Dhruvil Patel</h1>
+      <div class="sub">Engineering Student</div>
+    </div>
+
+    <div class="section-label">Skills &amp; Tools</div>
+    <div class="skills">
+      <span class="chip">Python</span>
+      <span class="chip">CAD / SolidWorks</span>
+      <span class="chip">MATLAB</span>
+      <span class="chip">Circuit Design</span>
+      <span class="chip">3D Printing</span>
+      <span class="chip">Data Analysis</span>
+      <span class="chip">GitHub</span>
+      <span class="chip">Linux</span>
+    </div>
+
+    <div class="section-label">Featured</div>
     <a class="card" href="page.html">
-      <div class="card-label">01</div>
-      <div class="card-title">Explore</div>
-      <span class="card-arrow">&#8594;</span>
+      <div class="card-left">
+        <div class="card-num">01 &mdash; Explore</div>
+        <div class="card-title">My Work</div>
+        <div class="card-sub">Projects, portfolio &amp; more</div>
+      </div>
+      <div class="card-arrow">&#8599;</div>
     </a>
-  </div>
 
-  <a class="linkedin-btn" href="{LINKEDIN_URL}" target="_blank" rel="noopener noreferrer">
-    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-      <path d="M20.447 20.452H17.21v-5.569c0-1.327-.024-3.037-1.852-3.037-1.854 0-2.137 1.446-2.137 2.941v5.665H9.985V9h3.107v1.561h.044c.433-.82 1.49-1.684 3.066-1.684 3.278 0 3.883 2.157 3.883 4.963l-.001 6.612zM5.337 7.433a1.806 1.806 0 1 1 0-3.612 1.806 1.806 0 0 1 0 3.612zm1.554 13.019H3.782V9h3.109v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.226.792 24 1.771 24h20.451C23.205 24 24 23.226 24 22.271V1.729C24 .774 23.205 0 22.225 0z"/>
-    </svg>
-    Connect on LinkedIn
-  </a>
+    <div class="section-label">Connect</div>
+    <div style="display:flex; flex-direction:column; gap:12px; align-items:flex-start;">
+      <a class="linkedin-btn" href="https://www.linkedin.com/in/dhruvilptl07" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:18px;height:18px;fill:#0a66c2;flex-shrink:0;">
+          <path d="M20.447 20.452H17.21v-5.569c0-1.327-.024-3.037-1.852-3.037-1.854 0-2.137 1.446-2.137 2.941v5.665H9.985V9h3.107v1.561h.044c.433-.82 1.49-1.684 3.066-1.684 3.278 0 3.883 2.157 3.883 4.963l-.001 6.612zM5.337 7.433a1.806 1.806 0 1 1 0-3.612 1.806 1.806 0 0 1 0 3.612zm1.554 13.019H3.782V9h3.109v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.226.792 24 1.771 24h20.451C23.205 24 24 23.226 24 22.271V1.729C24 .774 23.205 0 22.225 0z"/>
+        </svg>
+        Connect on LinkedIn
+      </a>
+      <a class="linkedin-btn" href="https://github.com/Dhruvil61875" target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" style="width:18px;height:18px;fill:#1c3020;flex-shrink:0;">
+          <path d="M12 0C5.374 0 0 5.373 0 12c0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23A11.509 11.509 0 0 1 12 5.803c1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576C20.566 21.797 24 17.3 24 12c0-6.627-5.373-12-12-12z"/>
+        </svg>
+        View GitHub
+      </a>
+    </div>
+
+  </div>
 
 </body>
 </html>
 """
 
-PAGE_HTML = f"""<!DOCTYPE html>
+PAGE_HTML = """<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Page — {NAME}</title>
-  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <title>My Work — Dhruvil Patel</title>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
   <style>
-    body {{
-      font-family: 'DM Sans', sans-serif;
-      background: #a8c4a3;
-      color: #1a2e18;
+    body {
+      font-family: 'Space Grotesk', sans-serif;
       min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 24px;
-    }}
-    a {{
-      color: #c9a84c;
-      text-decoration: none;
-      font-size: 14px;
-      letter-spacing: 0.5px;
-    }}
-    a:hover {{ text-decoration: underline; }}
+      background: linear-gradient(160deg, #e2f0de 0%, #eef6eb 50%, #d9ecdd 100%);
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      gap: 20px; color: #1c3020;
+    }
+    p { font-size: 12px; letter-spacing: 3px; text-transform: uppercase; color: #6aaa70; }
+    a {
+      color: #1c3020; text-decoration: none; font-size: 13px; font-weight: 500;
+      background: rgba(255,255,255,0.3); border: 1px solid rgba(255,255,255,0.55);
+      backdrop-filter: blur(12px); padding: 10px 22px; border-radius: 50px;
+      transition: background 0.2s;
+    }
+    a:hover { background: rgba(255,255,255,0.5); }
   </style>
 </head>
 <body>
-  <p style="color:#444; font-size:13px; letter-spacing:2px; text-transform:uppercase;">Coming soon</p>
+  <p>Coming soon</p>
   <a href="index.html">&larr; Back home</a>
 </body>
 </html>
@@ -221,5 +273,4 @@ if __name__ == "__main__":
     print("Generating website files...")
     write_file("index.html", INDEX_HTML)
     write_file("page.html", PAGE_HTML)
-    print("\nDone! Push these files to your GitHub repo and enable GitHub Pages.")
-    print("Don't forget to replace YOUR-LINKEDIN-USERNAME in the LINKEDIN_URL variable.")
+    print("\nDone! Push index.html and page.html to your GitHub repo and enable GitHub Pages.")
