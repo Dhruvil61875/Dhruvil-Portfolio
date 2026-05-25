@@ -10,7 +10,7 @@ OUTPUT_DIR = "."  # Files are written to the current directory
 
 # ── Configuration — edit these ──────────────────────────────────────────────
 NAME = "Dhruvil Patel"
-LINKEDIN_URL = "https://www.linkedin.com/in/YOUR-LINKEDIN-USERNAME"
+LINKEDIN_URL = "https://www.linkedin.com/in/dhruvilptl07"
 # ────────────────────────────────────────────────────────────────────────────
 
 INDEX_HTML = f"""<!DOCTYPE html>
@@ -25,8 +25,8 @@ INDEX_HTML = f"""<!DOCTYPE html>
 
     body {{
       font-family: 'DM Sans', sans-serif;
-      background: #0d0d0d;
-      color: #f0ede6;
+      background: #a8c4a3;
+      color: #1a2e18;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
@@ -41,7 +41,7 @@ INDEX_HTML = f"""<!DOCTYPE html>
       font-size: clamp(3rem, 8vw, 6.5rem);
       font-weight: 700;
       letter-spacing: -1px;
-      color: #f0ede6;
+      color: #1a2e18;
       line-height: 1.05;
     }}
 
@@ -64,8 +64,8 @@ INDEX_HTML = f"""<!DOCTYPE html>
     .card {{
       display: block;
       text-decoration: none;
-      background: #161616;
-      border: 0.5px solid #2a2a2a;
+      background: #b5ceb1;
+      border: 0.5px solid #8fb08a;
       padding: 36px 40px;
       cursor: pointer;
       position: relative;
@@ -85,7 +85,7 @@ INDEX_HTML = f"""<!DOCTYPE html>
       transition: transform 0.25s ease;
     }}
 
-    .card:hover {{ background: #1d1d1d; border-color: #3a3a3a; }}
+    .card:hover {{ background: #bdd3b9; border-color: #7aa375; }}
     .card:hover::after {{ transform: scaleY(1); }}
 
     .card-label {{
@@ -100,7 +100,7 @@ INDEX_HTML = f"""<!DOCTYPE html>
     .card-title {{
       font-family: 'Playfair Display', serif;
       font-size: 1.5rem;
-      color: #f0ede6;
+      color: #1a2e18;
       font-weight: 700;
     }}
 
@@ -110,7 +110,7 @@ INDEX_HTML = f"""<!DOCTYPE html>
       top: 50%;
       transform: translateY(-50%);
       font-size: 20px;
-      color: #444;
+      color: #7a9975;
       transition: color 0.25s, right 0.2s;
     }}
     .card:hover .card-arrow {{ color: #c9a84c; right: 32px; }}
@@ -122,8 +122,8 @@ INDEX_HTML = f"""<!DOCTYPE html>
       margin-top: 52px;
       text-decoration: none;
       background: transparent;
-      border: 1px solid #2a2a2a;
-      color: #f0ede6;
+      border: 1px solid #8fb08a;
+      color: #1a2e18;
       font-family: 'DM Sans', sans-serif;
       font-size: 14px;
       font-weight: 500;
@@ -142,9 +142,9 @@ INDEX_HTML = f"""<!DOCTYPE html>
     }}
 
     .linkedin-btn:hover {{
-      background: #1a1a1a;
+      background: #bdd3b9;
       border-color: #0a66c2;
-      color: #fff;
+      color: #1a2e18;
     }}
     .linkedin-btn:hover svg {{ transform: scale(1.1); }}
   </style>
@@ -184,8 +184,8 @@ PAGE_HTML = f"""<!DOCTYPE html>
   <style>
     body {{
       font-family: 'DM Sans', sans-serif;
-      background: #0d0d0d;
-      color: #f0ede6;
+      background: #a8c4a3;
+      color: #1a2e18;
       min-height: 100vh;
       display: flex;
       flex-direction: column;
